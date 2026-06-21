@@ -15,7 +15,7 @@ namespace CalamityAddon.Content.Projectiles
 
         public override void SetDefaults()
         {
-            Projectile.width = 26;
+            Projectile.width = 32;
             Projectile.height = 10;
             Projectile.aiStyle = -1;
             Projectile.friendly = false;
