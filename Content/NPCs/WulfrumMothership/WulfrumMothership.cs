@@ -13,7 +13,10 @@ using CalamityAddon.Content.Projectiles;
 using CalamityAddon.Content.Particles;
 using CalamityAddon.Content.Items.Ammo;
 using CalamityAddon.Content.Items.Placeables.Furniture.BossRelics;
+using CalamityAddon.Content.Items.Placeables.Furniture.Trophies;
 using CalamityAddon.Content.Items.LoreItems;
+using CalamityAddon.Content.Items.Summons;
+using CalamityAddon.Content.Items.TreasureBags;
 using System.IO;
 
 namespace CalamityAddon.Content.NPCs.WulfrumMothership
@@ -38,7 +41,6 @@ namespace CalamityAddon.Content.NPCs.WulfrumMothership
         {
             Main.npcFrameCount[NPC.type] = 2;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
-
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Electrified] = false;
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
@@ -755,7 +757,10 @@ namespace CalamityAddon.Content.NPCs.WulfrumMothership
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<Items.TreasureBags.WulfrumMothershipBag>()));
+            LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
+
+            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<WulfrumMothershipBag>()));
+            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<UnstableBattery>())); 
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<WulfrumLRocket>(), 1, 20, 30));
             
             if (ModContent.TryFind("CalamityMod", "WulfrumMetalScrap", out ModItem wulfrumMetalScrap))
@@ -765,7 +770,9 @@ namespace CalamityAddon.Content.NPCs.WulfrumMothership
                 npcLoot.Add(ItemDropRule.Common(energyCore.Type, 1, 4, 8));
 
             npcLoot.Add(ItemDropRule.ByCondition(new MasterOrRevengeanceCondition(), ModContent.ItemType<WulfrumMothershipRelic>()));
-            
+
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<WulfrumMothershipTrophy>(), 10));
+
             npcLoot.AddConditionalPerPlayer(
                 () => !DownedBossSystem.downedWulfrumMothership,
                 ModContent.ItemType<LoreWulfrumMothership>(), 

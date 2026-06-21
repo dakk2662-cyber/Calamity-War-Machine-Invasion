@@ -124,8 +124,10 @@ namespace CalamityAddon.Content.NPCs
         private void DropBomb(int damage)
         {
             int projectileType = ModContent.ProjectileType<WulfrumBigis>();
+
             Vector2 bombVel = new Vector2(NPC.velocity.X * 0.2f, 3f);
-            Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + new Vector2(0, 10), bombVel, projectileType, damage, 0f, Main.myPlayer);
+            Vector2 spawnPos = new Vector2(NPC.Center.X, NPC.position.Y + NPC.height);
+            Projectile.NewProjectile(NPC.GetSource_FromAI(), spawnPos, bombVel, projectileType, damage, 0f, Main.myPlayer);
 
             SoundEngine.PlaySound(SoundID.Item10, NPC.Center);
         }

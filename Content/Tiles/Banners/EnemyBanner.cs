@@ -20,7 +20,8 @@ namespace CalamityAddon.Content.Tiles.Banners
 		public enum StyleID
 		{
 			WulfrumTank,
-			WulfrumWormHead
+			WulfrumWormHead,
+			WulfrumBomber
 		}
 	}
 

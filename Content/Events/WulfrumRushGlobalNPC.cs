@@ -56,7 +56,7 @@ namespace CalamityAddon.Content.Events
                     pool.Add(ModContent.NPCType<WulfrumBomber>(), 0.6f);
                 }
 
-                if (WulfrumRush.invasionKills > 75)
+                if (WulfrumRush.invasionKills > 100)
                 {
                     pool.Add(ModContent.NPCType<WulfrumTank>(), 0.5f);
                 }
@@ -67,7 +67,7 @@ namespace CalamityAddon.Content.Events
         {
             if (WulfrumRush.isInvasionActive)
             {
-                spawnRate = 75;
+                spawnRate = 45;
                 maxSpawns = 30;
             }
         }

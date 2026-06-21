@@ -6,6 +6,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalamityAddon.Content.Items.Weapons;
+using CalamityAddon.Content.Items.Accessories;
 
 namespace CalamityAddon.Content.Items.TreasureBags
 {
@@ -58,6 +59,7 @@ namespace CalamityAddon.Content.Items.TreasureBags
                 ModContent.NPCType<NPCs.WulfrumMothership.WulfrumMothership>()));
 
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<WulfrumLRocket>(), 1, 75, 100));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<WulfrumBarrel>(), 1));
 
             int[] weaponPool = new int[] {
                 ModContent.ItemType<WulfrumSword>(),
@@ -69,11 +71,6 @@ namespace CalamityAddon.Content.Items.TreasureBags
             foreach (int weaponID in weaponPool) {
                 itemLoot.Add(ItemDropRule.Common(weaponID, 2));
             }
-
-            if (ModContent.TryFind("CalamityMod", "RoverDrive", out ModItem shield))
-                itemLoot.Add(ItemDropRule.Common(shield.Type, 3));
-            if (ModContent.TryFind("CalamityMod", "WulfrumBattery", out ModItem battery))
-                itemLoot.Add(ItemDropRule.Common(battery.Type, 3));
         }
     }
 }

@@ -13,7 +13,7 @@ namespace CalamityAddon.Content.Events
     {
         public static bool isInvasionActive = false;
         public static int invasionKills = 0;
-        public static int invasionMaxProgress = 100;
+        public static int invasionMaxProgress = 150;
         public const int CustomInvasionType = -67;
 
         private static bool AmplifiersSpawned = false;
@@ -80,7 +80,7 @@ namespace CalamityAddon.Content.Events
             }
 
             // Спавн Усилителя на 50% прогресса
-            if (Main.netMode != NetmodeID.MultiplayerClient && invasionKills >= 50 && !AmplifiersSpawned)
+            if (Main.netMode != NetmodeID.MultiplayerClient && invasionKills >= 75 && !AmplifiersSpawned)
             {
                 int targetPlayer = Player.FindClosest(new Vector2(Main.maxTilesX / 2, Main.maxTilesY / 2) * 16, 0, 0);
                 if (targetPlayer != -1)

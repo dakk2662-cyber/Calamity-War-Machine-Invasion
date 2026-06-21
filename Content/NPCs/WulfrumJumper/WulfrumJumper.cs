@@ -1,9 +1,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria.GameContent.Bestiary;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Audio;
+using Terraria.Localization;
 using System;
 using ReLogic.Content;
 using CalamityAddon.Content.Projectiles;
@@ -21,6 +23,7 @@ namespace CalamityAddon.Content.NPCs.WulfrumJumper
             Main.npcFrameCount[Type] = 30;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Electrified] = false;
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
         }
 
@@ -49,12 +52,29 @@ namespace CalamityAddon.Content.NPCs.WulfrumJumper
         public override void FindFrame(int frameHeight)
         {
             NPC.frameCounter++;
-            if (NPC.frameCounter >= 6)
+            if (NPC.frameCounter >= 6) //Длительность одного кадра анимации
             {
                 NPC.frameCounter = 0;
                 NPC.frame.Y += frameHeight;
-                if (NPC.frame.Y >= frameHeight * 6) NPC.frame.Y = 0;
+                if (NPC.ai[0] == 0)
+                {
+                    if (NPC.frame.Y >= frameHeight * 6) NPC.frame.Y = 0; //ПО стандарту после 6 кадра он сбрасывается до 0
+                }
+                else
+                {
+                    if (NPC.frame.Y >= frameHeight * 11) NPC.frame.Y = frameHeight * 7;
+                }
             }
+        }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
+            {
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.CalamityAddon.NPCs.WulfrumJumper.Bestiary"))
+            });
         }
 
         public override void AI()
@@ -80,6 +100,7 @@ namespace CalamityAddon.Content.NPCs.WulfrumJumper
                     if (NPC.localAI[0] == 1)
                     {
                         NPC.ai[0] = 1;
+                        NPC.frame.Y = Terraria.GameContent.TextureAssets.Npc[NPC.type].Height() / Main.npcFrameCount[NPC.type] * 16; //Переключаемся на кадр 16
                         NPC.ai[1] = 0;
                         NPC.localAI[0] = 0;
                         NPC.netUpdate = true;
@@ -138,7 +159,7 @@ namespace CalamityAddon.Content.NPCs.WulfrumJumper
 
                 if (NPC.ai[1] % 25 == 0 && NPC.ai[3] < 3)
                 {
-                    ShootRocket(player);
+                    ShootHomingRocket(player);
                     NPC.ai[3]++;
                     NPC.netUpdate = true;
                 }
@@ -146,6 +167,7 @@ namespace CalamityAddon.Content.NPCs.WulfrumJumper
                 if (NPC.ai[3] >= 3 && NPC.ai[1] >= 120)
                 {
                     NPC.ai[0] = 0;
+                    NPC.frame.Y = 0; //Переключаемся на кадр 0
                     NPC.ai[1] = 0;
                     NPC.ai[3] = 0;
                     NPC.netUpdate = true;
@@ -153,7 +175,7 @@ namespace CalamityAddon.Content.NPCs.WulfrumJumper
             }
         }
 
-        private void ShootRocket(Player target)
+        private void ShootHomingRocket(Player target)
         {
             if (Main.netMode == NetmodeID.MultiplayerClient) return;
 

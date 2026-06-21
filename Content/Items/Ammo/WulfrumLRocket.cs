@@ -8,7 +8,7 @@ namespace CalamityAddon.Content.Items.Ammo
     {
         public override void SetDefaults()
         {
-            Item.width = 20;
+            Item.width = 32;
             Item.height = 10;
             Item.damage = 14;
             Item.DamageType = DamageClass.Ranged;
@@ -18,7 +18,6 @@ namespace CalamityAddon.Content.Items.Ammo
             Item.value = Item.buyPrice(0, 0, 0, 50);
             Item.rare = ItemRarityID.Blue;
 
-            // Тип боеприпаса
             Item.ammo = ModContent.ItemType<WulfrumLRocket>();
             Item.shoot = ModContent.ProjectileType<Projectiles.WulfrumLRocketProj>();
             Item.shootSpeed = 7f;
