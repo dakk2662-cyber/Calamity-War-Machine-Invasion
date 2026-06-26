@@ -96,6 +96,55 @@ Items: {
 		DisplayName: Unstable Core
 		Tooltip: ""
 	}
+
+	WulfrumBomberBanner: {
+		Tooltip: ""
+		DisplayName: Wulfrum Bomber Banner
+	}
+
+	WulfrumBarrel: {
+		Tooltip:
+			'''
+			Buff all player damage in %
+			Damage increases by 10% every 20 seconds
+			Maximum damage buff bonus - 30%
+			If player takes damage, the bonus resets to 0%
+			[c/83B87E:Wulfrum since is the best in the world!]
+			'''
+		DisplayName: Wulfrum Barrel
+	}
+
+	WulfrumMothershipTrophy: {
+		Tooltip: ""
+		DisplayName: Wulfrum Mothership Trophy
+	}
+
+	UnstableBattery: {
+		Tooltip: Put this in Wufrum lure
+		DisplayName: Unstable Battery
+	}
+
+	Weapons: {
+		Rogue: {
+			WulfrumJavelin: {
+				Tooltip: ""
+				DisplayName: Wulfrum Javelin
+			}
+		}
+	}
+
+	WDAS: {
+		Tooltip:
+			'''
+			Wulfrum shards appear around the player
+			The shards spawn every 1.5 seconds
+			Maximum of 4 shards can spawn
+			Upon seeing an enemy, they move toward them and deal damage
+			[c/83B87E:Decoding:]
+			[c/83B87E:Wulfrum defensive-attaking system]
+			'''
+		DisplayName: W.D.A.S
+	}
 }
 
 NPCs: {
@@ -126,6 +175,9 @@ NPCs: {
 		DisplayName: Wulfrum Bomber
 		Bestiary: Initially, the Wulfrum bombers were designed to transport various heavy cargoes by air, but when the war began, they were easily converted to carry and drop small bombs. When these appeared, the enemy fled.
 	}
+
+	WulfrumJumper.DisplayName: Wulfrum Jumper
+	WulfrumJumperP1.DisplayName: Wulfrum Jumper P1
 }
 
 Projectiles: {
@@ -133,8 +185,12 @@ Projectiles: {
 	WulfrumLRocketProj.DisplayName: Wulfrum Rocket
 	WulfrumMachineProj.DisplayName: Wulfrum Machine
 	WulfrumTurret.DisplayName: Wulfrum Turret
-	WulfrumMinis.DisplayName: Wulfrum Minis
-	WulfrumMinisEnemy.DisplayName: Wulfrum Minis Enemy
+	WulfrumMinis.DisplayName: Wulfrum Mine
+	WulfrumMinisEnemy.DisplayName: Wulfrum Mine
+	WulfrumBigis.DisplayName: Wulfrum Bigis
+	WulfrumJavelinProj.DisplayName: Wulfrum Javelin Proj
+	WulfrumJavelinHoldout.DisplayName: Wulfrum Javelin Holdout
+	WDASShard.DisplayName: W D A S Shard
 }
 
 Buffs: {

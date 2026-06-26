@@ -97,8 +97,61 @@ Items: {
 		Tooltip:
 			'''
 			Попробуйте вставить в Вульфрумовую приманку
-			[c/83B87E:Оно явно отличается от других]
+			[c/83B87E:Интересная батарейка...]
 			'''
+	}
+
+	WulfrumBomberBanner: {
+		// Tooltip: ""
+		DisplayName: Знамя вульфрумового бомбера
+	}
+
+	WulfrumBarrel: {
+		Tooltip:
+			'''
+			Увеличивает весь урон игрока в %
+			Каждые 20 секунд урон возрастает на 10%
+			Максимально возможный бонус к урону - 30%
+			При получении урона игроком бонус сбрасывается до 0%
+			[c/83B87E:Вульфрумовая наука лучшая в мире!]
+			'''
+		DisplayName: Вульфрумовая бочка
+	}
+
+	WulfrumMothershipTrophy: {
+		// Tooltip: ""
+		DisplayName: Трофей вульфрумоыого носителя
+	}
+
+	UnstableBattery: {
+		Tooltip:
+			'''
+			Начинает Вульфрумовое нашествие
+			Вставте её в Вульфрумовую приманку
+			'''
+		DisplayName: Нестабильная батарейка
+	}
+
+	Weapons: {
+		Rogue: {
+			WulfrumJavelin: {
+				// Tooltip: ""
+				DisplayName: Вульфрумовое копьё
+			}
+		}
+	}
+
+	WDAS: {
+		Tooltip:
+			'''
+			Вокруг игрока появляются вульфрумовые осколки
+			Интервал появления осколков - 1.5 секунды
+			Максимум может появиться до 4-х штук
+			При виде противника направляются к нему и наносят урон
+			[c/83B87E:Расшифровка:]
+			[c/83B87E:Вульфрумовая оборонительно-боевая система]
+			'''
+		DisplayName: В.О.Б.С
 	}
 }
 
@@ -130,6 +183,9 @@ NPCs: {
 		DisplayName: Вульфрумовый бомбер
 		Bestiary: Изначально вульфрумовые бомберы предназначались для перевозки различных тяжелых грузов по воздуху, но когда началась война их легко переоборудовали под транспортировку и сброс небольших бомб. При их появлении противник обращался в бегство.
 	}
+
+	WulfrumJumper.DisplayName: Вульфрумовый прыгун
+	// WulfrumJumperP1.DisplayName: Wulfrum Jumper P1
 }
 
 Projectiles: {
@@ -137,8 +193,12 @@ Projectiles: {
 	WulfrumLRocketProj.DisplayName: Вульфрумовая ракета
 	WulfrumMachineProj.DisplayName: Вульфрумовая машина
 	WulfrumTurret.DisplayName: Вульфрумовая турель
-	WulfrumMinis.DisplayName: Вульфрумовые мины
-	// WulfrumMinisEnemy.DisplayName: Wulfrum Minis Enemy
+	WulfrumMinis.DisplayName: Вульфрумовые мина
+	WulfrumMinisEnemy.DisplayName: Вульфрумовые мина
+	WulfrumBigis.DisplayName: Вульфрумовые мина
+	// WulfrumJavelinProj.DisplayName: Wulfrum Javelin Proj
+	// WulfrumJavelinHoldout.DisplayName: Wulfrum Javelin Holdout
+	// WDASShard.DisplayName: W D A S Shard
 }
 
 Buffs: {
