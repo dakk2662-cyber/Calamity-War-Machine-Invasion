@@ -16,7 +16,7 @@ namespace CalamityAddon.Content.Items.Accessories
             Item.width = 40;
             Item.height = 46;
             Item.rare = 4;
-            Item.value = 50000;
+            Item.value = Item.buyPrice(0, 1, 50, 0);
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

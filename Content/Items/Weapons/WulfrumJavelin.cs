@@ -32,14 +32,10 @@ namespace CalamityAddon.Content.Items.Weapons
         }
 
         public override float StealthDamageMultiplier => 1.5f;
-
-        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
-            Vector2 shootFrom = player.MountedCenter;
-
-            Projectile.NewProjectile(source, shootFrom, velocity, type, damage, knockback, player.whoAmI);
-
-            return false;
+            position = player.Center + new Vector2(0, -15);
+            base.ModifyShootStats(player, ref position, ref velocity, ref type, ref damage, ref knockback);
         }
     }
 }
