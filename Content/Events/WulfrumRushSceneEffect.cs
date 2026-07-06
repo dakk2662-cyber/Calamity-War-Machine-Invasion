@@ -10,7 +10,7 @@ namespace CalamityAddon.Content.Events
             return WulfrumRush.isInvasionActive;
         }
 
-        public override SceneEffectPriority Priority => SceneEffectPriority.Event;
+        public override SceneEffectPriority Priority => SceneEffectPriority.BossMedium;
         public override int Music => MusicLoader.GetMusicSlot(Mod, "Content/Sounds/Music/WulfrumRushTheme");
     }
 }

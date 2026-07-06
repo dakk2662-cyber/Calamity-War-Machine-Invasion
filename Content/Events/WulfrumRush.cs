@@ -1,46 +1,45 @@
-using System.IO;
+using CalamityAddon.Content.NPCs.WulfrumJumper;
 using Microsoft.Xna.Framework;
+using System.IO;
 using Terraria;
+using Terraria.Chat;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using CalamityAddon.Content.NPCs.WulfrumJumper;
-using Terraria.Chat;
 
 namespace CalamityAddon.Content.Events
 {
-    internal class WulfrumRush : ModSystem
+    public class WulfrumRush : ModSystem
     {
         public static bool isInvasionActive = false;
         public static int invasionKills = 0;
         public static int invasionMaxProgress = 150;
         public const int CustomInvasionType = -67;
 
-        private static bool AmplifiersSpawned = false;
+        internal static bool Mob1Spawned = false;
+        internal static bool Mob2Spawned = false;
 
-        // Синхронизация данных между игроками
+        public static float InvasionCompletionRatio => MathHelper.Clamp((float)invasionKills / invasionMaxProgress, 0f, 1f);
+
         public override void NetSend(BinaryWriter writer)
         {
             writer.Write(isInvasionActive);
             writer.Write(invasionKills);
-            writer.Write(AmplifiersSpawned);
+            writer.Write(Mob1Spawned);
+            writer.Write(Mob2Spawned);
         }
 
         public override void NetReceive(BinaryReader reader)
         {
             isInvasionActive = reader.ReadBoolean();
             invasionKills = reader.ReadInt32();
-            AmplifiersSpawned = reader.ReadBoolean();
+            Mob1Spawned = reader.ReadBoolean();
+            Mob2Spawned = reader.ReadBoolean();
         }
 
         public override void PostUpdateInvasions()
         {
-            if ((Main.invasionType != 0 && Main.invasionType != CustomInvasionType) || Main.pumpkinMoon || Main.snowMoon) return;
-
-            if (isInvasionActive)
-            {
-                UpdateInvasion();
-            }
+            if (isInvasionActive) UpdateInvasion();
         }
 
         public static void StartInvasion()
@@ -49,21 +48,14 @@ namespace CalamityAddon.Content.Events
 
             isInvasionActive = true;
             invasionKills = 0;
-            AmplifiersSpawned = false;
+            Mob1Spawned = false;
+            Mob2Spawned = false;
 
             Main.invasionType = CustomInvasionType;
             Main.invasionSize = invasionMaxProgress;
-            Main.invasionProgress = 0;
-            Main.invasionProgressMax = invasionMaxProgress;
             Main.invasionWarn = 600;
 
-            string message = "Вы чувствуете движение металла вокруг себя";
-            Color color = new Color(175, 75, 255);
-
-            if (Main.netMode == NetmodeID.Server)
-                ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(message), color);
-            else
-                Main.NewText(message, color);
+            Broadcast("You feel the scrap movement around you...", new Color(175, 75, 255));
 
             if (Main.netMode == NetmodeID.Server)
                 NetMessage.SendData(MessageID.WorldData);
@@ -71,68 +63,87 @@ namespace CalamityAddon.Content.Events
 
         private void UpdateInvasion()
         {
-            Main.invasionProgress = invasionKills;
-            Main.invasionProgressMax = invasionMaxProgress;
-
             if (Main.netMode != NetmodeID.Server)
             {
-                Main.ReportInvasionProgress(invasionKills, invasionMaxProgress, Main.invasionProgressIcon, 0);
+                if (Main.invasionProgressAlpha < 1f)
+                    Main.invasionProgressAlpha += 0.05f;
             }
 
-            // Спавн Усилителя на 50% прогресса
-            if (Main.netMode != NetmodeID.MultiplayerClient && invasionKills >= 75 && !AmplifiersSpawned)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                int targetPlayer = Player.FindClosest(new Vector2(Main.maxTilesX / 2, Main.maxTilesY / 2) * 16, 0, 0);
-                if (targetPlayer != -1)
+                bool boss2Active = NPC.AnyNPCs(ModContent.NPCType<WulfrumJumperP2>());
+
+                if ((Mob2Spawned) && !boss2Active)
                 {
-                    NPC.SpawnOnPlayer(targetPlayer, ModContent.NPCType<CalamityMod.NPCs.NormalNPCs.WulfrumAmplifier>());
-                    AmplifiersSpawned = true;
-                    if (Main.netMode == NetmodeID.Server) NetMessage.SendData(MessageID.WorldData);
+                    if (invasionKills < invasionMaxProgress)
+                    {
+                        AbortInvasion();
+                        return;
+                    }
                 }
-            }
 
-            if (invasionKills >= invasionMaxProgress)
-            {
-                EndInvasion();
+                if (invasionKills >= 75 && !Mob1Spawned)
+                {
+                    SpawnBoss(ModContent.NPCType<WulfrumJumperP1>());
+                    Mob1Spawned = true;
+                }
+
+                if (invasionKills >= 149 && !Mob2Spawned)
+                {
+                    SpawnBoss(ModContent.NPCType<WulfrumJumperP2>());
+                    Mob2Spawned = true;
+                }
+
+                if (invasionKills >= invasionMaxProgress)
+                    EndInvasion();
             }
+        }
+
+        private static void SpawnBoss(int type)
+        {
+            int target = Player.FindClosest(Vector2.Zero, 0, 0);
+            if (target != -1)
+                NPC.SpawnOnPlayer(target, type);
+
+            if (Main.netMode == NetmodeID.Server)
+                NetMessage.SendData(MessageID.WorldData);
+        }
+
+        private void AbortInvasion()
+        {
+            Broadcast("Wulfrum machines destroy you...", new Color(255, 80, 80));
+
+            isInvasionActive = false;
+            Main.invasionType = 0;
+            Mob1Spawned = false;
+            Mob2Spawned = false;
+
+            if (Main.netMode == NetmodeID.Server)
+                NetMessage.SendData(MessageID.WorldData);
         }
 
         private void EndInvasion()
         {
-            if (Main.netMode == NetmodeID.MultiplayerClient) return;
+            Broadcast("Wulfrum invasion has been repelled!", new Color(175, 75, 255));
 
             DownedBossSystem.downedWulfrumRush = true;
             isInvasionActive = false;
             Main.invasionType = 0;
-            Main.invasionSize = 0;
-            Main.invasionWarn = 0;
-
-            string message = "Тяжелая артиллерия!";
-            Color color = new Color(50, 255, 130);
-
-            if (Main.netMode == NetmodeID.Server)
-                ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(message), color);
-            else
-                Main.NewText(message, color);
-
-            // Поиск игрока для спавна босса
-            int targetPlayer = -1;
-            for (int i = 0; i < Main.maxPlayers; i++)
-            {
-                if (Main.player[i].active && !Main.player[i].dead)
-                {
-                    targetPlayer = i;
-                    break;
-                }
-            }
-
-            if (targetPlayer != -1)
-            {
-                NPC.SpawnOnPlayer(targetPlayer, ModContent.NPCType<WulfrumJumper>());
-            }
 
             if (Main.netMode == NetmodeID.Server)
                 NetMessage.SendData(MessageID.WorldData);
+        }
+
+        private static void Broadcast(string message, Color color)
+        {
+            if (Main.netMode == NetmodeID.Server)
+            {
+                ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(message), color);
+            }
+            else
+            {
+                Main.NewText(message, color);
+            }
         }
     }
 }

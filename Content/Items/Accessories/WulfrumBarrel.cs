@@ -30,7 +30,7 @@ namespace CalamityAddon.Content.Items.Accessories
         public int timer = 0;
         public bool wulfrumbarrel = false;
         public float currentDamageBoost = 0f;
-        public float maxDamageBoost = 30f;
+        public float maxDamageBoost = 20f;
         public int maxTime = 60;
 
         // Переменная для отслеживания появления босса
@@ -67,10 +67,10 @@ namespace CalamityAddon.Content.Items.Accessories
                 if (currentDamageBoost < maxDamageBoost)
                 {
                     timer++;
-                    int stepTime = maxTime * 60 / 3;
+                    int stepTime = maxTime * 60 / 4;
                     if (timer >= stepTime)
                     {
-                        currentDamageBoost += maxDamageBoost / 3f;
+                        currentDamageBoost += maxDamageBoost / 4f;
                         timer = 0;
                     }
                 }
