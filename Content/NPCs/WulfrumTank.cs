@@ -10,6 +10,7 @@ using Terraria.Audio;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
+using CalamityAddon.Content.Mounts;
 using CalamityAddon.Content.Gores.Wulfrum;
 using CalamityAddon.Content.Projectiles;
 using Terraria.GameContent.ItemDropRules;
@@ -246,6 +247,7 @@ namespace CalamityAddon.Content.NPCs
 
         public override void ModifyNPCLoot(NPCLoot npcLoot) 
         {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<WulfrumPrototypeItem>(), 5));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<WulfrumLRocket>(), 2, 5, 10));
             if (ModContent.TryFind("CalamityMod", "WulfrumMetalScrap", out ModItem wulfrumMetalScrap)) {
                 npcLoot.Add(ItemDropRule.Common(wulfrumMetalScrap.Type, 1, 1, 2));

@@ -21,7 +21,7 @@ using System.IO;
 
 namespace CalamityAddon.Content.NPCs.WulfrumMothership
 {
-    //[AutoloadBossHead]
+    [AutoloadBossHead]
     public class WulfrumMothership : ModNPC
     {
         // === SUPERCHARGE ===
@@ -34,7 +34,7 @@ namespace CalamityAddon.Content.NPCs.WulfrumMothership
         private int phase2SpawnTimer = 0;
         private int phase3SpawnTimer = 0;
 
-        public static int Phase1HeadSlot;
+        //public static int Phase1HeadSlot;
         public static int Phase2HeadSlot;
 
         public override void SetStaticDefaults()
@@ -66,7 +66,7 @@ namespace CalamityAddon.Content.NPCs.WulfrumMothership
 
         public override void Load()
         {
-            Phase1HeadSlot = Mod.AddBossHeadTexture("CalamityAddon/Content/NPCs/WulfrumMothership/WulfrumMothership_Head_P1");
+            //Phase1HeadSlot = Mod.AddBossHeadTexture("CalamityAddon/Content/NPCs/WulfrumMothership/WulfrumMothership_Head_P1");
             Phase2HeadSlot = Mod.AddBossHeadTexture("CalamityAddon/Content/NPCs/WulfrumMothership/WulfrumMothership_Head_P2");
         }
         public override void BossHeadSlot(ref int index)
@@ -75,10 +75,10 @@ namespace CalamityAddon.Content.NPCs.WulfrumMothership
             {
                 index = Phase2HeadSlot;
             }
-            else
-            {
-                index = Phase1HeadSlot;
-            }
+            //else
+            //{
+            //    index = Phase1HeadSlot;
+            //}
         }
 
 
@@ -760,7 +760,7 @@ namespace CalamityAddon.Content.NPCs.WulfrumMothership
             LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
 
             npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<WulfrumMothershipBag>()));
-            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<UnstableBattery>())); 
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<UnstableBattery>())); 
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<WulfrumLRocket>(), 1, 20, 30));
             
             if (ModContent.TryFind("CalamityMod", "WulfrumMetalScrap", out ModItem wulfrumMetalScrap))

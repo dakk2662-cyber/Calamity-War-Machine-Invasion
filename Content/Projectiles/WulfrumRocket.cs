@@ -22,7 +22,7 @@ namespace CalamityAddon.Content.Projectiles
             Projectile.hostile = true;
             Projectile.tileCollide = true;
             Projectile.penetrate = 1;
-            Projectile.timeLeft = 300;
+            Projectile.timeLeft = 240;
         }
 
         private int frameCounter = 0;

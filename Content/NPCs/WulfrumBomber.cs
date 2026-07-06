@@ -8,6 +8,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Audio;
 using CalamityAddon.Content.Projectiles;
+using CalamityAddon.Content.Gores.Wulfrum;
 using Terraria.GameContent.Bestiary;
 using Terraria.Localization;
 using Terraria.ModLoader.Utilities;
@@ -162,15 +163,37 @@ namespace CalamityAddon.Content.NPCs
 
         public override void HitEffect(NPC.HitInfo hit)
         {
-            if (NPC.life <= 0 && Main.netMode != NetmodeID.Server)
+            if (Main.dedServ) return;
+
+            for (int k = 0; k < 5; k++)
             {
-                for (int i = 1; i <= 3; i++)
+                Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.GrassBlades, hit.HitDirection, -1f, 0, default, 1f);
+            }
+
+            if (NPC.life <= 0)
+            {
+                for (int k = 0; k < 20; k++)
                 {
-                    if (ModContent.TryFind<ModGore>("CalamityMod", "WulfrumEnemyGore" + i, out ModGore g))
-                        Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, g.Type);
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.GrassBlades, hit.HitDirection, -1f, 0, default, 1.5f);
+                }
+
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModContent.GoreType<BomberGore1>(), 1f);
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModContent.GoreType<BomberGore2>(), 1f);
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModContent.GoreType<BomberGore3>(), 1f);
+
+                int randomGoreCount = Main.rand.Next(2, 4);
+                for (int i = 0; i < randomGoreCount; i++)
+                {
+                    int index = Main.rand.Next(1, 9);
+
+                    if (ModContent.TryFind<ModGore>("CalamityMod", "WulfrumEnemyGore" + index, out ModGore calGore))
+                    {
+                        Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity * 0.5f, calGore.Type, 1f);
+                    }
                 }
             }
         }
+
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             if (ModContent.TryFind("CalamityMod", "WulfrumMetalScrap", out ModItem wulfrumMetalScrap)) {

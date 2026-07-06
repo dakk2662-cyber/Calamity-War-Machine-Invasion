@@ -44,7 +44,7 @@ namespace CalamityAddon.Content.Projectiles.Rogue
             if (calPlayer.StealthStrikeAvailable())
             {
                 Projectile.ai[0] = 1f; // Stealth Strike
-                //Projectile.penetrate = 3; // Пробивает 2-х врагов, взрывается на 3-м
+                Projectile.penetrate = 3; // Пробивает 2-х врагов, взрывается на 3-м
                 Projectile.velocity *= 1.5f;
                 Projectile.timeLeft = 600;
             }
