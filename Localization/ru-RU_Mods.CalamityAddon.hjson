@@ -1,5 +1,3 @@
-# This file will automatically update with entries for new content after a build and reload.
-
 Items: {
 	WulfrumSword: {
 		DisplayName: Вульфрумовый меч
@@ -71,6 +69,17 @@ Items: {
 				оставаться грозным противником, которого все так же защищают более простые вульфрумовые создания.
 				'''
 		}
+
+		LoreWulfrumInvasion: {
+			Tooltip:
+				'''
+				После того как ты уничтожил их корабль-носитель логично,
+				что вульфрумовые машины разгневались и решили отомстить тебе;
+				но так как ты это читаешь, видимо ты отразил их атаку.
+				Но вульфрумовых машин ещё очень много, скорее всего ты с ними ещё встретишься...
+				'''
+			DisplayName: История (Вульфрумовое Нашествие)
+		}
 	}
 
 	WulfrumBook: {
@@ -92,15 +101,6 @@ Items: {
 			'''
 	}
 
-	UnstableCore: {
-		DisplayName: Нестабильное ядро
-		Tooltip:
-			'''
-			Попробуйте вставить в Вульфрумовую приманку
-			[c/83B87E:Интересная батарейка...]
-			'''
-	}
-
 	WulfrumBomberBanner: {
 		// Tooltip: ""
 		DisplayName: Знамя вульфрумового бомбера
@@ -110,8 +110,8 @@ Items: {
 		Tooltip:
 			'''
 			Увеличивает весь урон игрока в %
-			Каждые 20 секунд урон возрастает на 10%
-			Максимально возможный бонус к урону - 30%
+			Каждые 15 секунд урон возрастает на 5%
+			Максимально возможный бонус к урону - 20%
 			При получении урона игроком бонус сбрасывается до 0%
 			[c/83B87E:Вульфрумовая наука лучшая в мире!]
 			'''
@@ -120,7 +120,7 @@ Items: {
 
 	WulfrumMothershipTrophy: {
 		// Tooltip: ""
-		DisplayName: Трофей вульфрумоыого носителя
+		DisplayName: Трофей вульфрумового носителя
 	}
 
 	UnstableBattery: {
@@ -128,6 +128,7 @@ Items: {
 			'''
 			Начинает Вульфрумовое нашествие
 			Вставте её в Вульфрумовую приманку
+			[c/83B87E:Интересная батарейка...]
 			'''
 		DisplayName: Нестабильная батарейка
 	}
@@ -135,7 +136,12 @@ Items: {
 	Weapons: {
 		Rogue: {
 			WulfrumJavelin: {
-				// Tooltip: ""
+				Tooltip:
+					'''
+					Копья наносят урон по площади
+					При скытном ударе, копье летит прямо и быстро
+					[c/83B87E:Почувствуй себя Вульфрумовым спартанцем!]
+					'''
 				DisplayName: Вульфрумовое копьё
 			}
 		}
@@ -144,14 +150,47 @@ Items: {
 	WDAS: {
 		Tooltip:
 			'''
+			[c/83B87E:Режим атаки:]
 			Вокруг игрока появляются вульфрумовые осколки
 			Интервал появления осколков - 1.5 секунды
 			Максимум может появиться до 4-х штук
 			При виде противника направляются к нему и наносят урон
-			[c/83B87E:Расшифровка:]
-			[c/83B87E:Вульфрумовая оборонительно-боевая система]
+			[c/42F5F1:Режим защиты:]
+			Увеличивает защиту игрока на 5
+			[c/83B87E:Расшифровка: Вульфрумовая оборонительно-боевая система.]
 			'''
-		DisplayName: В.О.Б.С
+		DisplayName: В.О.Б.С.
+		KeybindInfo: Нажмите {0} чтобы изменить состяние аксессуара
+	}
+
+	WulfrumJumperTrophy: {
+		// Tooltip: ""
+		DisplayName: Трофей вульфрумового прыгуна
+	}
+
+	WulfrumJumperRelic: {
+		// Tooltip: ""
+		DisplayName: Реликвия вульфрумового прыгуна
+	}
+
+	WulfrumPrototypeItem: {
+		DisplayName: Вульфрумовый чертеж
+		Tooltip:
+			'''
+			Призывает вульфрумовый прототип
+			Прототип быстро передвигается и может делать рывки
+			[c/83B87E:Какой же он няшный)]
+			'''
+	}
+
+	WulfrumInvasionMusicBox: {
+		DisplayName: Wulfrum Invasion (Music Box)
+		Tooltip: By - Spozmotosm
+	}
+
+	MechanismWarfareMusicBox: {
+		Tooltip: By - Digidonix
+		DisplayName: Mechanism Warfare (Music Box)
 	}
 }
 
@@ -184,8 +223,12 @@ NPCs: {
 		Bestiary: Изначально вульфрумовые бомберы предназначались для перевозки различных тяжелых грузов по воздуху, но когда началась война их легко переоборудовали под транспортировку и сброс небольших бомб. При их появлении противник обращался в бегство.
 	}
 
-	WulfrumJumper.DisplayName: Вульфрумовый прыгун
-	// WulfrumJumperP1.DisplayName: Wulfrum Jumper P1
+	WulfrumJumperP1.DisplayName: Вульфрумовый прыгун
+
+	WulfrumJumperP2: {
+		DisplayName: Вульфрумовый прыгун
+		Bestiary: Эти машины были специально разработаны что бы устраивать засады на армию Ярима в горной местности. Их ракетные установки уничтожали основную часть вражеских войск, а союзные вульфрумовые роботы без труда настигали уцелевших противников.
+	}
 }
 
 Projectiles: {
@@ -193,17 +236,41 @@ Projectiles: {
 	WulfrumLRocketProj.DisplayName: Вульфрумовая ракета
 	WulfrumMachineProj.DisplayName: Вульфрумовая машина
 	WulfrumTurret.DisplayName: Вульфрумовая турель
-	WulfrumMinis.DisplayName: Вульфрумовые мина
-	WulfrumMinisEnemy.DisplayName: Вульфрумовые мина
-	WulfrumBigis.DisplayName: Вульфрумовые мина
-	// WulfrumJavelinProj.DisplayName: Wulfrum Javelin Proj
-	// WulfrumJavelinHoldout.DisplayName: Wulfrum Javelin Holdout
-	// WDASShard.DisplayName: W D A S Shard
+	WulfrumMinis.DisplayName: Вульфрумовая мина
+	WulfrumBigis.DisplayName: Вульфрумовая мина
+	WulfrumJavelinProj.DisplayName: Вульфрумовое копьё
+	WDASShard.DisplayName: Вульфрумовый осколок
+	WulfrumShockwave.DisplayName: Вульфрумовый прыгун
 }
 
 Buffs: {
 	WulfrumTurretBuff: {
 		DisplayName: Вульфрумовая турель
 		Description: Вас защищает вульфрумовая турель
+	}
+
+	WulfrumPrototypeBuff: {
+		Description: Мини-прототип танка
+		DisplayName: Вульфрумовый прототип
+	}
+}
+
+Mods: {
+	CalamityAddon: {
+		Events: {
+			WulfrumRush: {
+				InvasionName: Вульфрумовое нашествие
+				SpawnInfo: Нажмите ПКМ по [i:CalamityMod/WulfrumLureItem] имея [i:CalamityAddon/UnstableBattery] в инвентаре.
+			}
+		}
+	}
+}
+
+Keybinds.WDASKeybind.DisplayName: Смена режима В.О.Б.С.
+
+Events: {
+	WulfrumRush: {
+		InvasionName: Вульфрумовое нашествие
+		SpawnInfo: Нажмите ПКМ по [i:CalamityMod/WulfrumLureItem] имея [i:CalamityAddon/UnstableBattery] в инвентаре.
 	}
 }
