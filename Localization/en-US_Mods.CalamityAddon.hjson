@@ -111,7 +111,7 @@ Items: {
 			'''
 			Buffs damage by up to 20%
 			The buff is increased by 5% every 15 seconds
-			The bonus damage dissapears completely after taking damage.
+			The buff drops to 0% after taking any damage.
 			[c/83B87E:Wulfrum is the best!]
 			'''
 		DisplayName: Wulfrum Barrel
